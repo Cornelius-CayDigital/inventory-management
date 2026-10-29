@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_BASE_URL = 'http://localhost:8001/api'
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001/api'
 
 export const api = {
   async getInventory(filters = {}) {
@@ -96,6 +96,16 @@ export const api = {
 
   async createPurchaseOrder(purchaseOrderData) {
     const response = await axios.post(`${API_BASE_URL}/purchase-orders`, purchaseOrderData)
+    return response.data
+  },
+
+  async getRestockOrders() {
+    const response = await axios.get(`${API_BASE_URL}/restock-orders`)
+    return response.data
+  },
+
+  async createRestockOrder(orderData) {
+    const response = await axios.post(`${API_BASE_URL}/restock-orders`, orderData)
     return response.data
   },
 
